@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.0.0/fonts/remixicon.css" rel="stylesheet">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="main">
+        <div id="left">
+            <h3>sasta vs code</h3>
+            <div class="nav">
+                <h4>Folder Name</h4>
+                <div class="icon">
+                    <i id="foldericon" class="ri-folder-fill"></i>
+                    <i id="fileicon" class="ri-file-3-line"></i>
+                  <a href="/"><i class="ri-restart-line"></i></a>
+                </div>
+            </div>
+            <div class="forms">
+                <form id="formfile" class="form" action="/fileCreated">
+                    <input type="text" name="fileName" placeholder="File Name">
+                </form>
+                <form id="formfolder" class="form" action="/folderCreated">
+                    <input type="text" name="folderName" placeholder="Folder Name">
+                </form>
+            </div>
+            <div id="files">
+                <% files.forEach(function(file){%>
+                    <% if(file.isfolder === true){%>
+                        <div class="file">
+                           <a href="/filename/<%= file.name %>"> <h4><i class="ri-folder-2-line"></i><%= file.name %></h4></a>
+                            <div class="inc">
+                                <i class="ri-pencil-fill"></i>
+                              <a href="/deletefile/<%=file.name %>"><i class="ri-delete-bin-6-line"></i></a>
+                            </div>
+                        </div>
+                    <%}else{%>
+                        <div class="file">
+                           <a href="/filename/<%= file.name %>"><h4><i class="ri-file-2-line"></i><%= file.name %></h4></a> 
+                            <div class="inc">
+                                <i class="ri-pencil-fill"></i>
+                               <a href="/deletefile/<%=file.name %>"><i class="ri-delete-bin-6-line"></i></a>
+                            </div>
+                        </div>
+                    <%}%>
+                <%})%>
+            </div>
+        </div>
+      
+        <div id="right">
+            <div id="rnav">
+               <div id="opened"><%=fileName%> <a href="/"><i class="ri-close-line"></i></div></a>
+            </div>
+            <textarea name="" id="" cols="30" rows="10"><%=data%></textarea>
+        </div>
+    </div>
+   
+    <script>
+        const fileicon = document.querySelector("#fileicon");
+        const foldericon = document.querySelector("#foldericon");
+        const formfile = document.querySelector("#formfile");
+        const formfolder = document.querySelector("#formfolder");
+        const forms = document.querySelector(".forms");
+
+        function onOff() {
+            document.querySelectorAll("form").forEach(function (e) {
+                e.style.display = "none"
+            })
+        }
+
+        fileicon.addEventListener("click", function () {
+            onOff();
+            formfile.style.display = "initial"
+        })
+        foldericon.addEventListener("click", function () {
+            onOff();
+            formfolder.style.display = "initial"
+        })
+        window.addEventListener("keydown", function (detail) {
+            if (detail.keyCode === 77) {
+                onOff();
+                document.querySelectorAll("form input").forEach(function (elem) {
+                    elem.value = "";
+                })
+
+            }
+        })
+    </script>
+    <!-- <script src="/javascripts/index.js"></script> -->
+</body>
+
+</html>
